@@ -1,1 +1,3 @@
 include ':app'
+include ':accl'
+project(':accl').projectDir=new File('/home/umer/Music/Savy_Projects/Android_Projects/LibraryProject/accl/')
