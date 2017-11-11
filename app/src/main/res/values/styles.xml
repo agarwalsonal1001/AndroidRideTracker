@@ -8,4 +8,42 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+<!--Text Bold Styles-->
+    <style name="text_style_black_bold_24dp">
+        <item name="android:textColor">@color/blackColor</item>
+        <item name="android:textSize">@dimen/text_size_24dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_style_black_bold_48dp">
+        <item name="android:textColor">@color/blackColor</item>
+        <item name="android:textSize">@dimen/text_size_48dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_style_white_bold_48dp">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_48dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!--Text Normal Styles-->
+    <style name="text_style_black_normal_24dp">
+        <item name="android:textColor">@color/blackColor</item>
+        <item name="android:textSize">@dimen/text_size_24dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="text_style_white_normal_20dp">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_20dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="text_style_white_normal_18dp">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_18dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>
