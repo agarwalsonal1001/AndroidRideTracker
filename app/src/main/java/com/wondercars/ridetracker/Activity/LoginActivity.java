@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wondercars.ridetracker.BaseClasses.BaseActivity;
+import com.wondercars.ridetracker.CustomClasses.AppProgressDialog;
 import com.wondercars.ridetracker.R;
 import com.wondercars.ridetracker.Retrofit.DTOs.LoginServiceDTOs.LoginRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.LoginServiceDTOs.LoginResponseObj;
@@ -49,8 +50,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void callUserLoginApi() {
-        RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(LoginActivity.this, APIConstants.baseurl, getLoginApiRequestObject(), LoginResponseObj.class, Constants.RetrofitMethodConstants.LOGIN_API, USER_LOGIN_API, Constants.ApiMethods.POST_METHOD, retrofitInterface)
-                .setProgressDialog(new ProgressDialog(this))
+        RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(LoginActivity.this,
+                APIConstants.baseurl, getLoginApiRequestObject(), LoginResponseObj.class,
+                Constants.RetrofitMethodConstants.LOGIN_API, USER_LOGIN_API, Constants.ApiMethods.POST_METHOD, retrofitInterface)
+                .setProgressDialog(new AppProgressDialog(this))
                 .setShowDialog(true)
                 .build();
         retrofitParamsDTO.execute(retrofitParamsDTO);

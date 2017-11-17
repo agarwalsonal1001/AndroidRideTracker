@@ -20,9 +20,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="text_style_white_bold_48dp">
+    <style name="text_style_white_bold_44dp">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_48dp</item>
+        <item name="android:textSize">@dimen/text_size_44dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -14,6 +14,7 @@
     <dimen name="text_size_20dp">20dp</dimen>
     <dimen name="text_size_22dp">22dp</dimen>
     <dimen name="text_size_24dp">24dp</dimen>
+    <dimen name="text_size_44dp">44dp</dimen>
     <dimen name="text_size_48dp">48dp</dimen>
     <dimen name="text_size_82dp">82dp</dimen>
 
