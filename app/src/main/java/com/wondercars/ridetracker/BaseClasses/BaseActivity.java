@@ -49,6 +49,23 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setActionBar(Toolbar toolbar, String title,boolean setHomeButtonEndable) {
+        try {
+            if (toolbar != null) {
+                setSupportActionBar(toolbar);
+                if (TextUtils.isEmpty(title)) {
+                    getSupportActionBar().setTitle("");
+                } else {
+                    getSupportActionBar().setTitle(title);
+                }
+                getSupportActionBar().setHomeButtonEnabled(setHomeButtonEndable);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(setHomeButtonEndable);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showShortToast(String s) {
         Toast.makeText(this.mContext, s, Toast.LENGTH_SHORT).show();
     }

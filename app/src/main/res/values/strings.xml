@@ -4,4 +4,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
+    <string name="track_rides">Track Rides</string>
+    <string name="Manage_Executives">Manage Executives</string>
+    <string name="manage_cars">Manage Cars</string>
+    <string name="generate_reports">Generates Reports</string>
+
+
 </resources>

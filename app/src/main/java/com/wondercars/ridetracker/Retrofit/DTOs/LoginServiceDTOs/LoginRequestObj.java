@@ -6,9 +6,7 @@ package com.wondercars.ridetracker.Retrofit.DTOs.LoginServiceDTOs;
 
 public class LoginRequestObj {
     String username;
-    //: "admin",
       String password;
-    //: "admin123"
 
 
     public String getUsername() {

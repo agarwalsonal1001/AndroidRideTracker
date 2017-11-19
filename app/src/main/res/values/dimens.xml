@@ -3,6 +3,8 @@
 
     <dimen name="activity_margin_10dp">10dp</dimen>
     <dimen name="activity_margin_5dp">5dp</dimen>
+    <dimen name="size_50dp">50dp</dimen>
+    <dimen name="size_60dp">60dp</dimen>
 
 
     <!--Text Sizes-->

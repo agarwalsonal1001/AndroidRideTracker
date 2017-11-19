@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.wondercars.ridetracker.BaseClasses.BaseActivity;
 import com.wondercars.ridetracker.R;
+import com.wondercars.ridetracker.manager.PreferenceManager;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -19,9 +20,16 @@ public class SplashScreenActivity extends BaseActivity {
             @Override
             public void run() {
                 //call function
-                callActivity(LoginActivity.class);
+                if(PreferenceManager.readBoolean(PreferenceManager.PREF_LOGIN_CURRENT_TAG)){
+                    callActivity(NavigationActivity.class);
+                    finish();
+                }else {
+                    callActivity(LoginActivity.class);
+                    finish();
+                }
+
             }
-        }, 3000);
+        }, 3100);
     }
 
     // demo change

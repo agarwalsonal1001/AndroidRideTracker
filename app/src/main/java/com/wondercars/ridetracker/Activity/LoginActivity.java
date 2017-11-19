@@ -12,6 +12,8 @@ import com.wondercars.ridetracker.R;
 import com.wondercars.ridetracker.Retrofit.DTOs.LoginServiceDTOs.LoginRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.LoginServiceDTOs.LoginResponseObj;
 import com.wondercars.ridetracker.Utils.APIConstants;
+import com.wondercars.ridetracker.Utils.AppConstants;
+import com.wondercars.ridetracker.manager.PreferenceManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,12 +22,17 @@ import umer.accl.interfaces.RetrofitInterface;
 import umer.accl.retrofit.RetrofitParamsDTO;
 import umer.accl.utils.Constants;
 
+import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.FAILURE;
+import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.SUCCESS;
+import static com.wondercars.ridetracker.Utils.AppConstants.LOGIN_SUCCESSFULLY;
 import static com.wondercars.ridetracker.Utils.AppConstants.PLEASE_ENTER_PASSWORD;
 import static com.wondercars.ridetracker.Utils.AppConstants.PLEASE_ENTER_USERNAME;
+import static com.wondercars.ridetracker.manager.PreferenceManager.PREF_ADMIN_UID;
+import static com.wondercars.ridetracker.manager.PreferenceManager.PREF_LOGIN_CURRENT_TAG;
 
 public class LoginActivity extends BaseActivity {
 
-    private static final int USER_LOGIN_API = 1;
+    private static final int ADMIN_LOGIN_API = 1;
     @BindView(R.id.edt_enter_username)
     EditText edtEnterUsername;
     @BindView(R.id.edt_enter_password)
@@ -38,7 +45,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-      //  callUserLoginApi();
+        //  callUserLoginApi();
 
     }
 
@@ -52,7 +59,7 @@ public class LoginActivity extends BaseActivity {
     private void callUserLoginApi() {
         RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(LoginActivity.this,
                 APIConstants.baseurl, getLoginApiRequestObject(), LoginResponseObj.class,
-                Constants.RetrofitMethodConstants.LOGIN_API, USER_LOGIN_API, Constants.ApiMethods.POST_METHOD, retrofitInterface)
+                APIConstants.RetrofitMethodConstants.ADMIN_LOGIN_API, ADMIN_LOGIN_API, Constants.ApiMethods.POST_METHOD, retrofitInterface)
                 .setProgressDialog(new AppProgressDialog(this))
                 .setShowDialog(true)
                 .build();
@@ -64,13 +71,35 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onSuccess(Object object, int serviceId) {
 
-            showLongToast(object.toString());
+            switch (serviceId) {
+
+                case ADMIN_LOGIN_API:
+                    LoginResponseObj loginResponseObj = (LoginResponseObj) object;
+                    if (loginResponseObj != null && loginResponseObj.getStatus() != null) {
+                        if (loginResponseObj.getStatus().getStatusCode() == SUCCESS) {
+                            showLongToast(LOGIN_SUCCESSFULLY);
+                            PreferenceManager.writeBoolean(PREF_LOGIN_CURRENT_TAG, true);
+                            PreferenceManager.writeString(PREF_ADMIN_UID,loginResponseObj.getAdmin_uid());
+                            callActivity(NavigationActivity.class);
+                            finish();
+                        } else if (loginResponseObj.getStatus().getStatusCode() == FAILURE) {
+                            showLongToast(loginResponseObj.getStatus().getErrorDescription());
+                        }
+                    }
+
+                    break;
+
+                default:
+
+                    break;
+            }
+
 
         }
 
         @Override
         public void onError(int serviceId) {
-            //showLongToast(Constants.ToastMessages.SOMETHING_WENT_WRONG);
+            showLongToast(AppConstants.ToastMessages.SOMETHING_WENT_WRONG);
         }
     };
 
@@ -92,5 +121,11 @@ public class LoginActivity extends BaseActivity {
         if (validateFields()) {
             callUserLoginApi();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }
