@@ -38,15 +38,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
-        <Spinner
-            android:id="@+id/spinner_select_variant"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.15"></Spinner>
-
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -64,11 +55,64 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner_select_variant"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="0.1"></Spinner>
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Petrol"
+                android:textSize="@dimen/text_size_18dp" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Diesel"
+                android:textSize="@dimen/text_size_18dp" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:orientation="horizontal">
+
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Automatic"
+                android:textSize="@dimen/text_size_18dp" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Mannual"
+                android:textSize="@dimen/text_size_18dp" />
+
+        </RadioGroup>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.40"></View>
+            android:layout_weight="0.15"></View>
 
         <Button
             android:id="@+id/button_create"

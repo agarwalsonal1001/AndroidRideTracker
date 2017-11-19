@@ -6,9 +6,11 @@ package com.wondercars.ridetracker.Retrofit.DTOs.GetCarsDTOs;
 
 public class CarDetailObj {
 
-    String uid;
+    String carId;
     String carName;
+    String mode;
     String carNumber;
-    String carVeriantUid;
-    String carVeriantName;
+    String variantId;
+    String fuelType;
+    String carVariantName;
 }
