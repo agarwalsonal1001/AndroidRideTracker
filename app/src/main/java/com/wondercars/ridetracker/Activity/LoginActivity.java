@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
                         if (loginResponseObj.getStatus().getStatusCode() == SUCCESS) {
                             showLongToast(LOGIN_SUCCESSFULLY);
                             PreferenceManager.writeBoolean(PREF_LOGIN_CURRENT_TAG, true);
-                            PreferenceManager.writeString(PREF_ADMIN_UID,loginResponseObj.getAdmin_uid());
+                            PreferenceManager.writeString(PREF_ADMIN_UID, loginResponseObj.getAdmin_uid());
                             callActivity(NavigationActivity.class);
                             finish();
                         } else if (loginResponseObj.getStatus().getStatusCode() == FAILURE) {
@@ -126,6 +126,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        finishAffinity();
     }
 }

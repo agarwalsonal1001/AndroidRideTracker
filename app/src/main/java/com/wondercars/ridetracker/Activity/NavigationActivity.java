@@ -38,6 +38,7 @@ public class NavigationActivity extends BaseActivity {
                 break;
             case R.id.ll_manage_cars:
 
+                callActivity(CarListActivity.class);
                 break;
         }
     }

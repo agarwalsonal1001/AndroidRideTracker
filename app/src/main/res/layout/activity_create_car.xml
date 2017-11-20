@@ -50,26 +50,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Car Number"
-                android:inputType="number"
+                android:inputType="text"
                 android:textColorHint="@color/blackColor" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner_select_variant"
+
+        <TextView
+            style="@style/text_style_primaryColor_normal_20dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.1"></Spinner>
+            android:layout_weight="0.1"
+            android:gravity="center_vertical"
+            android:text="Select Car  Variant" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:background="@drawable/gray_border_rectangle_with_smallcurve_corners"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_select_variant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Spinner>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            style="@style/text_style_primaryColor_normal_20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/activity_margin_10dp"
+            android:layout_weight="0.06"
+            android:text="Select Fuel Type" />
 
         <RadioGroup
+            android:id="@+id/rg_fuel_type"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.1"
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_petrol"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -77,6 +106,7 @@
                 android:textSize="@dimen/text_size_18dp" />
 
             <RadioButton
+                android:id="@+id/rb_diesel"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -85,14 +115,23 @@
 
         </RadioGroup>
 
-        <RadioGroup
+        <TextView
+            style="@style/text_style_primaryColor_normal_20dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.06"
+            android:text="Select Car Mode" />
+
+        <RadioGroup
+            android:id="@+id/rg_car_mode"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:orientation="horizontal">
 
 
             <RadioButton
+                android:id="@+id/rb_automatic"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -100,6 +139,7 @@
                 android:textSize="@dimen/text_size_18dp" />
 
             <RadioButton
+                android:id="@+id/rb_manual"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -112,7 +152,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"></View>
+            android:layout_weight="0.05"></View>
 
         <Button
             android:id="@+id/button_create"
@@ -123,7 +163,7 @@
             android:layout_weight="0.12"
             android:background="@drawable/blue_rectangle_with_circular_corners"
             android:gravity="center"
-            android:text="Create Car"
+            android:text="Add"
             android:textAllCaps="false" />
 
     </LinearLayout>

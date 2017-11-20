@@ -6,24 +6,22 @@ package com.wondercars.ridetracker.Retrofit.DTOs.GetVeriantsDTOs;
 
 public class VeriantsDetails {
 
-    String veriantUid;
-    String veriantName;
+    String variantId;
+    String variantName;
 
-
-    public String getVeriantName() {
-        return veriantName;
+    public String getVariantId() {
+        return variantId;
     }
 
-    public void setVeriantName(String veriantName) {
-        this.veriantName = veriantName;
+    public void setVariantId(String variantId) {
+        this.variantId = variantId;
     }
 
-    public String getVeriantUid() {
-
-        return veriantUid;
+    public String getVariantName() {
+        return variantName;
     }
 
-    public void setVeriantUid(String veriantUid) {
-        this.veriantUid = veriantUid;
+    public void setVariantName(String variantName) {
+        this.variantName = variantName;
     }
 }

@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wondercars.ridetracker.R;
+import com.wondercars.ridetracker.Retrofit.DTOs.GetCarsDTOs.CarDetailObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.ExecutivesDetailsObj;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by acer on 18/11/17.
@@ -20,61 +24,65 @@ import java.util.ArrayList;
 public class CarsRecyclerAdapter extends RecyclerView.Adapter<CarsRecyclerAdapter.MyViewHolder> {
 
 
-    ArrayList<ExecutivesDetailsObj> executivesDetailsObjArrayList;
+    ArrayList<CarDetailObj> carDetailObjArrayList;
     Activity activity;
     OnItemClickListener onItemClickListener;
 
 
-    public CarsRecyclerAdapter(ArrayList<ExecutivesDetailsObj> executivesDetailsObjArrayList, Activity activity, OnItemClickListener onItemClickListener) {
-        this.executivesDetailsObjArrayList = executivesDetailsObjArrayList;
+    public CarsRecyclerAdapter( Activity activity,ArrayList<CarDetailObj> carDetailObjArrayList, OnItemClickListener onItemClickListener) {
+        this.carDetailObjArrayList = carDetailObjArrayList;
         this.activity = activity;
         this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position, ExecutivesDetailsObj object);
+        public void onItemClick(View view, int position, CarDetailObj object);
     }
 
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.executives_recycler_child_layout, parent, false);
+                .inflate(R.layout.cars_recycler_child_layout, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvExecName.setText(executivesDetailsObjArrayList.get(position).getFullName());
-        holder.tvExecNumber.setText(executivesDetailsObjArrayList.get(position).getPhoneNumber());
-        holder.tvExecEmail.setText(executivesDetailsObjArrayList.get(position).getEmail());
+        holder.tvCarNumber.setText(carDetailObjArrayList.get(position).getRegistrationNumber());
+        holder.tvCarVariant.setText(carDetailObjArrayList.get(position).getVariantName());
+        holder.tvCarFuelType.setText(carDetailObjArrayList.get(position).getFuelType());
+        holder.tvCarMode.setText(carDetailObjArrayList.get(position).getMode());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                onItemClickListener.onItemClick(v, position, executivesDetailsObjArrayList.get(position));
+                onItemClickListener.onItemClick(v, position, carDetailObjArrayList.get(position));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return executivesDetailsObjArrayList.size();
+        return carDetailObjArrayList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvExecName;
-        TextView tvExecNumber;
-        TextView tvExecEmail;
+
+        @BindView(R.id.tv_car_number)
+        TextView tvCarNumber;
+        @BindView(R.id.tv_car_fuel_type)
+        TextView tvCarFuelType;
+        @BindView(R.id.tv_car_variant)
+        TextView tvCarVariant;
+        @BindView(R.id.tv_car_mode)
+        TextView tvCarMode;
+        @BindView(R.id.card_view)
         CardView cardView;
 
         public MyViewHolder(View view) {
             super(view);
-            cardView = (CardView) view.findViewById(R.id.card_view);
-            tvExecName = (TextView) view.findViewById(R.id.tv_exec_name);
-            tvExecNumber = (TextView) view.findViewById(R.id.tv_exec_number);
-            tvExecEmail = (TextView) view.findViewById(R.id.tv_exec_email);
-
+            ButterKnife.bind(this, view);
         }
     }
 }

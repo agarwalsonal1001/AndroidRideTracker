@@ -9,5 +9,21 @@ import com.wondercars.ridetracker.Retrofit.DTOs.Status;
 public class CreateCarsResponseObj {
 
     Status status;
-    String uid;
+    String carId;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getCarId() {
+        return carId;
+    }
+
+    public void setCarId(String carId) {
+        this.carId = carId;
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.wondercars.ridetracker.Adapters.ExecutivesRecyclerAdapter;
@@ -67,6 +68,18 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+
+                onBackPressed();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
+
     }
 
     private GetExecutivesRequestObj getExecutivesRequestObj() {

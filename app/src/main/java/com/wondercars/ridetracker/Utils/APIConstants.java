@@ -14,6 +14,9 @@ public interface APIConstants {
         String ADMIN_LOGIN_API ="/adminlogin";
         String CREATE_EXECUTIVES_API="/upsertUser";
         String GET_EXECUTIVES= "/getExecutives";
+        String GET_VARIANTS="/getVariants";
+        String CREATE_CAR_API = "/createCar";
+        String GET_CARS_API ="/getCars";
 
     }
 

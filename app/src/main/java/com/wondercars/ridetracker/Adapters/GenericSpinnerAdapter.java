@@ -25,9 +25,8 @@ public class GenericSpinnerAdapter<T> extends ArrayAdapter<T> {
     private LayoutInflater inflater;
     String responseObjectType;
 
-    public GenericSpinnerAdapter(Activity mActivity, Context context, int resource, List<T> objectsList, String responseObjectType) {
-        super(context, resource, objectsList);
-        this.context = context;
+    public GenericSpinnerAdapter(Activity mActivity, int resource, List<T> objectsList, String responseObjectType) {
+        super(mActivity.getApplicationContext(), resource, objectsList);
         this.itemList = objectsList;
         this.mActivity = mActivity;
         this.responseObjectType = responseObjectType;
@@ -89,7 +88,7 @@ public class GenericSpinnerAdapter<T> extends ArrayAdapter<T> {
         switch (responseObjectType){
 
             case AppConstants.ResponseObjectType.VERIANT_DETAILS:
-                label.setText(((VeriantsDetails)itemList.get(position)).getVeriantName());
+                label.setText(((VeriantsDetails)itemList.get(position)).getVariantName());
                 break;
         }
 

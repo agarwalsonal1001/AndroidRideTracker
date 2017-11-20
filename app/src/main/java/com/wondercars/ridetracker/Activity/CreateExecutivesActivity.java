@@ -2,6 +2,7 @@ package com.wondercars.ridetracker.Activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +59,18 @@ public class CreateExecutivesActivity extends BaseActivity {
         setActionBar(toolbar, "Create Executive");
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+
+                onBackPressed();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
+
+    }
 
     @OnClick({R.id.button_create})
     public void onClick(View view) {
