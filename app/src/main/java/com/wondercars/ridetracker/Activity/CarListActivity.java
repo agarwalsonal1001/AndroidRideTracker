@@ -1,5 +1,6 @@
 package com.wondercars.ridetracker.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,15 @@ import com.wondercars.ridetracker.BaseClasses.BaseActivity;
 import com.wondercars.ridetracker.CustomClasses.AppProgressDialog;
 import com.wondercars.ridetracker.CustomClasses.MuseosanNormalTextView;
 import com.wondercars.ridetracker.R;
+import com.wondercars.ridetracker.Retrofit.DTOs.DeleteCarDTOs.DeleteCarRequestObj;
+import com.wondercars.ridetracker.Retrofit.DTOs.DeleteCarDTOs.DeleteCarResponseObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetCarsDTOs.CarDetailObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetCarsDTOs.GetCarsRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetCarsDTOs.GetCarsResponseObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.GetExecutivesRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.GetExecutivesResponseObj;
 import com.wondercars.ridetracker.Utils.APIConstants;
+import com.wondercars.ridetracker.Utils.AppAlertDialog;
 import com.wondercars.ridetracker.Utils.AppConstants;
 import com.wondercars.ridetracker.manager.PreferenceManager;
 
@@ -40,7 +44,7 @@ import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.SU
 
 public class CarListActivity extends BaseActivity implements CarsRecyclerAdapter.OnItemClickListener {
 
-    private static final int GET_CARS_SERVICE_ID = 0;
+    private static final int GET_CARS_SERVICE_ID = 0, DELETE_CAR_SERVICE_ID = 1;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recy_view)
@@ -64,6 +68,7 @@ public class CarListActivity extends BaseActivity implements CarsRecyclerAdapter
     private void init() {
         try {
             setActionBar(toolbar, "Cars");
+
             callGetCarsAPI();
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyView.setLayoutManager(mLayoutManager);
@@ -86,11 +91,26 @@ public class CarListActivity extends BaseActivity implements CarsRecyclerAdapter
 
     }
 
-    private GetCarsRequestObj getCarsRequestObj() {
-        GetCarsRequestObj getCarsRequestObj = new GetCarsRequestObj();
-        //getCarsRequestObj.setCarName("Baleno");
-        getCarsRequestObj.setAdmin_uid(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
 
+    private void callDeleteCarAPI(DeleteCarRequestObj deleteCarRequestObj) {
+        RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(this,
+                APIConstants.baseurl, deleteCarRequestObj, DeleteCarResponseObj.class,
+                APIConstants.RetrofitMethodConstants.DELETE_CAR, DELETE_CAR_SERVICE_ID, Constants.ApiMethods.POST_METHOD, retrofitInterface)
+                .setProgressDialog(new AppProgressDialog(this))
+                .setShowDialog(true)
+                .build();
+        retrofitParamsDTO.execute(retrofitParamsDTO);
+    }
+
+    private GetCarsRequestObj getCarsRequestObj() {
+        GetCarsRequestObj getCarsRequestObj = null;
+        if (getIntent().hasExtra("requestObj")) {
+            getCarsRequestObj = (GetCarsRequestObj) getIntent().getSerializableExtra("requestObj");
+        } else {
+            getCarsRequestObj = new GetCarsRequestObj();
+            //getCarsRequestObj.setCarName("Baleno");
+            getCarsRequestObj.setAdmin_uid(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
+        }
         return getCarsRequestObj;
     }
 
@@ -132,6 +152,23 @@ public class CarListActivity extends BaseActivity implements CarsRecyclerAdapter
                     }
                     break;
 
+
+                case DELETE_CAR_SERVICE_ID:
+                    try {
+                        DeleteCarResponseObj deleteCarResponseObj = (DeleteCarResponseObj) object;
+                        if (deleteCarResponseObj != null && deleteCarResponseObj.getStatus() != null) {
+                            if (deleteCarResponseObj.getStatus().getStatusCode() == SUCCESS) {
+                                showLongToast("Car Deleted Successfully");
+                                callGetCarsAPI();
+                            } else if (deleteCarResponseObj.getStatus().getStatusCode() == FAILURE) {
+                                showLongToast(deleteCarResponseObj.getStatus().getErrorDescription());
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
                 default:
 
                     break;
@@ -165,9 +202,25 @@ public class CarListActivity extends BaseActivity implements CarsRecyclerAdapter
     }
 
     @Override
-    public void onItemClick(View view, int position, CarDetailObj object) {
+    public void onItemClick(View view, int position, final CarDetailObj object) {
+        AppAlertDialog.showAlertDialog(CarListActivity.this, "Alert", "Do you want to delete this car", false, "Yes", "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        showLongToast(object.getRegistrationNumber());
+                DeleteCarRequestObj deleteCarRequestObj = new DeleteCarRequestObj();
+                deleteCarRequestObj.setAdmin_uid(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
+                deleteCarRequestObj.setCarId(object.getCarId());
+                callDeleteCarAPI(deleteCarRequestObj);
+                dialog.dismiss();
+                //callUpsertSlotAPI(object);
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     @Override

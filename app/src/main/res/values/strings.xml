@@ -5,9 +5,11 @@
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
     <string name="track_rides">Track Rides</string>
+    <string name="track_test_drives">Track Test Drives</string>
     <string name="Manage_Executives">Manage Executives</string>
     <string name="manage_cars">Manage Cars</string>
     <string name="generate_reports">Generates Reports</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDqGO-XL44GhlIbXGra8o0_X6L_wxz08f0</string>
 
-
+    <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDqlbeEQpAUO8WMdngUJ6vtDZAQQhDJ25Y</string>-->
 </resources>

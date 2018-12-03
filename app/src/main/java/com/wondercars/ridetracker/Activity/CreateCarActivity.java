@@ -11,12 +11,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.wondercars.ridetracker.Adapters.CarModelsRecyclerAdapter;
 import com.wondercars.ridetracker.Adapters.GenericSpinnerAdapter;
 import com.wondercars.ridetracker.BaseClasses.BaseActivity;
 import com.wondercars.ridetracker.CustomClasses.AppProgressDialog;
 import com.wondercars.ridetracker.R;
 import com.wondercars.ridetracker.Retrofit.DTOs.CreateCarDTOs.CreateCarRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.CreateCarDTOs.CreateCarsResponseObj;
+import com.wondercars.ridetracker.Retrofit.DTOs.GetCarModelsDTOs.CarModels;
+import com.wondercars.ridetracker.Retrofit.DTOs.GetCarModelsDTOs.GetCarModelsRequestObj;
+import com.wondercars.ridetracker.Retrofit.DTOs.GetCarModelsDTOs.GetCarModelsResponseObject;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetVeriantsDTOs.GetVeriantsRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetVeriantsDTOs.GetVeriantsResponseObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetVeriantsDTOs.VeriantsDetails;
@@ -34,24 +38,27 @@ import umer.accl.utils.Constants;
 import static android.text.TextUtils.isEmpty;
 import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.FAILURE;
 import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.SUCCESS;
+import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.CAR_MODELS;
 import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.VERIANT_DETAILS;
 
 public class CreateCarActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.et_car_name)
-    EditText etCarName;
     @BindView(R.id.spinner_select_variant)
     Spinner spinnerSelectVariant;
+
+    @BindView(R.id.spinner_select_car_models)
+    Spinner spinnerSelectCarModel;
+
     @BindView(R.id.et_car_number)
     EditText etCarNumber;
     @BindView(R.id.button_create)
     Button buttonCreate;
 
-    StringBuilder variantId;
+    StringBuilder variantId, carModel;
 
-    private static final int GET_VARIANTS_SERVICE_ID = 0, CREATE_CAR_SERVICE_ID = 1;
+    private static final int GET_VARIANTS_SERVICE_ID = 0, CREATE_CAR_SERVICE_ID = 1, GET_CARMODELS_SERVICEID = 2;
     @BindView(R.id.rb_petrol)
     RadioButton rbPetrol;
     @BindView(R.id.rb_diesel)
@@ -72,8 +79,10 @@ public class CreateCarActivity extends BaseActivity {
         ButterKnife.bind(this);
         setActionBar(toolbar, "Add Car");
         callGetVariantsAPI();
-       // variantStringBuilder = new StringBuilder();
+        callGetCarModelsAPI();
+        // variantStringBuilder = new StringBuilder();
         variantId = new StringBuilder();
+        carModel = new StringBuilder();
     }
 
     @OnClick({R.id.button_create})
@@ -101,9 +110,6 @@ public class CreateCarActivity extends BaseActivity {
 
     private boolean validateFields() {
 
-        if (isEmpty(etCarName.getText().toString())) {
-            showLongToast("Please enter car name");
-        }
         if (isEmpty((etCarNumber.getText().toString()))) {
             showLongToast("Please enter car number");
         }
@@ -126,6 +132,20 @@ public class CreateCarActivity extends BaseActivity {
         return new GetVeriantsRequestObj(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
     }
 
+
+    private GetCarModelsRequestObj getCarModelsRequestObj() {
+        return new GetCarModelsRequestObj(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
+    }
+
+    private void callGetCarModelsAPI() {
+        RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(this,
+                APIConstants.baseurl, getCarModelsRequestObj(), GetCarModelsResponseObject.class,
+                APIConstants.RetrofitMethodConstants.GET_CAR_MODELS_API, GET_CARMODELS_SERVICEID, Constants.ApiMethods.POST_METHOD, retrofitInterface)
+                .setProgressDialog(new AppProgressDialog(this))
+                .setShowDialog(true)
+                .build();
+        retrofitParamsDTO.execute(retrofitParamsDTO);
+    }
 
     private void callGetVariantsAPI() {
         RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(this,
@@ -154,7 +174,8 @@ public class CreateCarActivity extends BaseActivity {
 
         CreateCarRequestObj createCarRequestObj = new CreateCarRequestObj();
         createCarRequestObj.setAdmin_uid(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
-        createCarRequestObj.setCarName(etCarName.getText().toString());
+        createCarRequestObj.setcarModelId(carModel.toString());
+        //  createCarRequestObj.setCarName(etCarName.getText().toString());
         createCarRequestObj.setRegistrationNumber(etCarNumber.getText().toString());
 
         RadioButton radioButton = (RadioButton) findViewById(rgFuelType.getCheckedRadioButtonId());
@@ -195,7 +216,7 @@ public class CreateCarActivity extends BaseActivity {
 
                                     @Override
                                     public void onNothingSelected(AdapterView<?> parent) {
-                                       // variantStringBuilder.append(((VeriantsDetails) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(0)).getVariantName());
+                                        // variantStringBuilder.append(((VeriantsDetails) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(0)).getVariantName());
                                         variantId.append(((VeriantsDetails) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(0)).getVariantId());
                                     }
                                 });
@@ -214,8 +235,8 @@ public class CreateCarActivity extends BaseActivity {
                     CreateCarsResponseObj carsResponseObj = (CreateCarsResponseObj) object;
                     if (carsResponseObj != null && carsResponseObj.getStatus() != null) {
                         if (carsResponseObj.getStatus().getStatusCode() == SUCCESS) {
-
                             showLongToast("Car added successfully");
+                            onBackPressed();
                         } else {
                             showLongToast(carsResponseObj.getStatus().getErrorDescription());
                         }
@@ -223,12 +244,51 @@ public class CreateCarActivity extends BaseActivity {
                     }
                     break;
 
-                default:
+                case GET_CARMODELS_SERVICEID:
+                    try {
+                        GetCarModelsResponseObject carModelsResponseObject = (GetCarModelsResponseObject) object;
+                        if (carModelsResponseObject != null && carModelsResponseObject.getStatus() != null) {
+                            if (carModelsResponseObject.getStatus().getStatusCode() == SUCCESS) {
+                                if (carModelsResponseObject.getCarModels() != null && carModelsResponseObject.getCarModels().size() > 0) {
+                                    GenericSpinnerAdapter genericSpinnerAdapter = new GenericSpinnerAdapter(CreateCarActivity.this, 1,
+                                            carModelsResponseObject.getCarModels(), CAR_MODELS);
+                                    spinnerSelectCarModel.setAdapter(genericSpinnerAdapter);
+                                    spinnerSelectCarModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                                            //showShortToast(((CarModels) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(position)).getCarModelId());
+
+                                            if (carModel.length() > 0) {
+                                                carModel.setLength(0);
+                                                carModel.trimToSize();
+                                            }
+                                            carModel.append(((CarModels) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(position)).getCarModelId());
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                            carModel.append(((CarModels) ((GenericSpinnerAdapter) (parent.getAdapter())).getItemList().get(0)).getCarModelId());
+
+                                        }
+                                    });
+
+                                } else {
+
+                                }
+                            } else if (carModelsResponseObject.getStatus().getStatusCode() == FAILURE) {
+                                showLongToast(carModelsResponseObject.getStatus().getErrorDescription());
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                default:
                     break;
             }
-
-
         }
 
         @Override
@@ -236,9 +296,4 @@ public class CreateCarActivity extends BaseActivity {
             showLongToast(AppConstants.ToastMessages.SOMETHING_WENT_WRONG);
         }
     };
-
-
-    @OnClick(R.id.button_create)
-    public void onClick() {
-    }
 }

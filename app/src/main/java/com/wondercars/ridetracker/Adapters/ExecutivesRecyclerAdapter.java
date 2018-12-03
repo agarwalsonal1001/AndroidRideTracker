@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,12 +28,20 @@ public class ExecutivesRecyclerAdapter extends RecyclerView.Adapter<ExecutivesRe
     ArrayList<ExecutivesDetailsObj> executivesDetailsObjArrayList;
     Activity activity;
     OnItemClickListener onItemClickListener;
+    boolean showDeleteIcon;
 
 
     public ExecutivesRecyclerAdapter(ArrayList<ExecutivesDetailsObj> executivesDetailsObjArrayList, Activity activity, OnItemClickListener onItemClickListener) {
         this.executivesDetailsObjArrayList = executivesDetailsObjArrayList;
         this.activity = activity;
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public ExecutivesRecyclerAdapter(ArrayList<ExecutivesDetailsObj> executivesDetailsObjArrayList, Activity activity, OnItemClickListener onItemClickListener, boolean showDeleteIcon) {
+        this.executivesDetailsObjArrayList = executivesDetailsObjArrayList;
+        this.activity = activity;
+        this.onItemClickListener = onItemClickListener;
+        this.showDeleteIcon = showDeleteIcon;
     }
 
     public interface OnItemClickListener {
@@ -49,16 +58,39 @@ public class ExecutivesRecyclerAdapter extends RecyclerView.Adapter<ExecutivesRe
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvExecName.setText(executivesDetailsObjArrayList.get(position).getFullName());
-        holder.tvExecNumber.setText(executivesDetailsObjArrayList.get(position).getPhoneNumber());
-        holder.tvExecEmail.setText(executivesDetailsObjArrayList.get(position).getEmail());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        try {
+            final ExecutivesDetailsObj executivesDetailsObj = executivesDetailsObjArrayList.get(position);
+            if (executivesDetailsObj != null) {
+                holder.tvExecName.setText(executivesDetailsObj.getFullName());
+                holder.tvExecNumber.setText(executivesDetailsObj.getPhoneNumber());
+                holder.tvExecEmail.setText(executivesDetailsObj.getEmail());
+                holder.tv_exec_designation.setText(executivesDetailsObj.getDesignation());
 
-                onItemClickListener.onItemClick(v, position, executivesDetailsObjArrayList.get(position));
+                if (showDeleteIcon) {
+                    holder.ib_delete_executive.setVisibility(View.VISIBLE);
+                    holder.ib_delete_executive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (onItemClickListener != null)
+                                onItemClickListener.onItemClick(v, position, executivesDetailsObj);
+                        }
+                    });
+                } else {
+                    holder.ib_delete_executive.setVisibility(View.GONE);
+                }
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (onItemClickListener != null)
+                            onItemClickListener.onItemClick(v, position, executivesDetailsObj);
+                    }
+                });
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,7 +102,9 @@ public class ExecutivesRecyclerAdapter extends RecyclerView.Adapter<ExecutivesRe
         TextView tvExecName;
         TextView tvExecNumber;
         TextView tvExecEmail;
+        TextView tv_exec_designation;
         CardView cardView;
+        ImageButton ib_delete_executive;
 
         public MyViewHolder(View view) {
             super(view);
@@ -78,6 +112,8 @@ public class ExecutivesRecyclerAdapter extends RecyclerView.Adapter<ExecutivesRe
             tvExecName = (TextView) view.findViewById(R.id.tv_exec_name);
             tvExecNumber = (TextView) view.findViewById(R.id.tv_exec_number);
             tvExecEmail = (TextView) view.findViewById(R.id.tv_exec_email);
+            tv_exec_designation = (TextView) view.findViewById(R.id.tv_exec_designation);
+            ib_delete_executive = (ImageButton) view.findViewById(R.id.ib_delete_executive);
 
         }
     }

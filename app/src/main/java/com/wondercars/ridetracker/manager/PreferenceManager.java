@@ -20,6 +20,7 @@ public class PreferenceManager {
     public static final String PREF_LOGIN_CURRENT_TAG = "PREF_LOGIN_CURRENT_TAG";
     public static final String PREF_NAVIGATION_FLAG = "PREF_NAVIGATION_FLAG";
     public static final String PREF_ADMIN_UID = "PREF_ADMIN_UID";
+    public static final String PREF_ADMIN_USER_NAME = "PREF_ADMIN_USER_NAME";
     public static final String PREF_DEVICE_IDENTIFICATION_ID = "PREF_DEVICE_IDENTIFICATION_ID";
     public static final String PREF_NOTIFICATION_DEVICE_TOKEN = "PREF_NOTIFICATION_DEVICE_TOKEN";
     public static final String PREF_INDIVISUAL_ID = "PREF_INDIVISUAL_ID";
@@ -79,4 +80,10 @@ public class PreferenceManager {
         return mObject;
     }
 
+    public static void clearAllPreference() {
+        //SharedPreferences preferences = pref.c
+        SharedPreferences pref = RideTrackerApplicationClass.getInstance().getApplicationContext().getSharedPreferences(APP_ID,
+                WORLD_READABLE);
+        pref.edit().clear().commit();
+    }
 }

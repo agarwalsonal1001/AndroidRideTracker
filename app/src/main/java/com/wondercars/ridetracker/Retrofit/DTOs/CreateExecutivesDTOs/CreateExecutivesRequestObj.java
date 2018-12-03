@@ -7,19 +7,39 @@ package com.wondercars.ridetracker.Retrofit.DTOs.CreateExecutivesDTOs;
 public class CreateExecutivesRequestObj {
 
 
-    String username;
-    String password;
-    String fullName;
-    String email;
-    String phoneNumber;
-    String admin_uid;
+    private String title;
+    private String designation;
+    private String email;
+    private String password;
+    private String fullName;
+    private String phoneNumber;
+    private String createDate;
+    private String lastUpdateDate;
+    private String activeFlg;
+    private String admin_uid;
 
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -38,14 +58,6 @@ public class CreateExecutivesRequestObj {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -54,11 +66,35 @@ public class CreateExecutivesRequestObj {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAdmin_uid() {
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(String lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getActiveFlg() {
+        return activeFlg;
+    }
+
+    public void setActiveFlg(String activeFlg) {
+        this.activeFlg = activeFlg;
+    }
+
+    public String getAdminUid() {
         return admin_uid;
     }
 
-    public void setAdmin_uid(String admin_uid) {
-        this.admin_uid = admin_uid;
+    public void setAdminUid(String adminUid) {
+        this.admin_uid = adminUid;
     }
 }

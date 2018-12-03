@@ -1,5 +1,6 @@
 package com.wondercars.ridetracker.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,16 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 
 import com.wondercars.ridetracker.Adapters.ExecutivesRecyclerAdapter;
 import com.wondercars.ridetracker.BaseClasses.BaseActivity;
 import com.wondercars.ridetracker.CustomClasses.AppProgressDialog;
 import com.wondercars.ridetracker.CustomClasses.MuseosanNormalTextView;
 import com.wondercars.ridetracker.R;
+import com.wondercars.ridetracker.Retrofit.DTOs.CreateExecutivesDTOs.CreateExecutivesRequestObj;
+import com.wondercars.ridetracker.Retrofit.DTOs.CreateExecutivesDTOs.CreateExecutivesResponsetObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.ExecutivesDetailsObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.GetExecutivesRequestObj;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs.GetExecutivesResponseObj;
 import com.wondercars.ridetracker.Utils.APIConstants;
+import com.wondercars.ridetracker.Utils.AppAlertDialog;
 import com.wondercars.ridetracker.Utils.AppConstants;
 import com.wondercars.ridetracker.manager.PreferenceManager;
 
@@ -32,6 +37,8 @@ import umer.accl.utils.Constants;
 
 import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.FAILURE;
 import static com.wondercars.ridetracker.Utils.APIConstants.RetrofitConstants.SUCCESS;
+import static com.wondercars.ridetracker.Utils.AppConstants.EXECUTIVES_CREATED_SUCCESSFULLY;
+import static com.wondercars.ridetracker.Utils.AppConstants.EXECUTIVES_DELETED_SUCCESSFULLY;
 import static java.security.AccessController.getContext;
 
 public class ExecutiveListActivity extends BaseActivity implements ExecutivesRecyclerAdapter.OnItemClickListener {
@@ -48,6 +55,7 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
     Toolbar toolbar;
 
     ExecutivesRecyclerAdapter executivesRecyclerAdapter;
+    private final int DELETE_EXECUTIVES_SERVICE_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +90,24 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
 
     }
 
+    private ExecutivesDetailsObj getUpsertExecutivesRequestObj(ExecutivesDetailsObj executivesRequestObj) {
+        executivesRequestObj.setActiveFlg("N");
+        return executivesRequestObj;
+
+
+    }
+
+    private void callCreateExecutivesAPI(ExecutivesDetailsObj executivesRequestObj) {
+        RetrofitParamsDTO retrofitParamsDTO = new RetrofitParamsDTO.RetrofitBuilder(this,
+                APIConstants.baseurl, getUpsertExecutivesRequestObj(executivesRequestObj), CreateExecutivesResponsetObj.class,
+                APIConstants.RetrofitMethodConstants.CREATE_EXECUTIVES_API, DELETE_EXECUTIVES_SERVICE_ID, Constants.ApiMethods.POST_METHOD, retrofitInterface)
+                .setProgressDialog(new AppProgressDialog(this))
+                .setShowDialog(true)
+                .build();
+        retrofitParamsDTO.execute(retrofitParamsDTO);
+        // mUserRegistrationService.userLogin(retrofitParamsDTO, getLoginApiRequestObject());
+    }
+
     private GetExecutivesRequestObj getExecutivesRequestObj() {
         GetExecutivesRequestObj getExecutivesRequestObj = new GetExecutivesRequestObj(PreferenceManager.readString(PreferenceManager.PREF_ADMIN_UID));
         return getExecutivesRequestObj;
@@ -110,7 +136,7 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
                             if (responseObj.getStatus().getStatusCode() == SUCCESS) {
                                 if (responseObj.getExecutivesDetailsObjArrayList() != null && responseObj.getExecutivesDetailsObjArrayList().size() > 0) {
                                     setUIAccordingToIsExecutivesAvailable(true);
-                                    executivesRecyclerAdapter = new ExecutivesRecyclerAdapter(((ArrayList) responseObj.getExecutivesDetailsObjArrayList()), ExecutiveListActivity.this, ExecutiveListActivity.this);
+                                    executivesRecyclerAdapter = new ExecutivesRecyclerAdapter(((ArrayList) responseObj.getExecutivesDetailsObjArrayList()), ExecutiveListActivity.this, ExecutiveListActivity.this,true);
                                     recyViewExecutives.setAdapter(executivesRecyclerAdapter);
                                 } else {
                                     setUIAccordingToIsExecutivesAvailable(false);
@@ -124,6 +150,20 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
                         e.printStackTrace();
                     }
                     break;
+                case DELETE_EXECUTIVES_SERVICE_ID:
+                    CreateExecutivesResponsetObj responseObj = (CreateExecutivesResponsetObj) object;
+                    if (responseObj != null && responseObj.getStatus() != null) {
+                        if (responseObj.getStatus().getStatusCode() == SUCCESS) {
+                            showLongToast(EXECUTIVES_DELETED_SUCCESSFULLY);
+                            callGetExecutivesAPI();
+                        } else if (responseObj.getStatus().getStatusCode() == FAILURE) {
+                            showLongToast(responseObj.getStatus().getErrorDescription());
+                        }
+                    }
+
+                    break;
+
+
 
                 default:
 
@@ -165,8 +205,25 @@ public class ExecutiveListActivity extends BaseActivity implements ExecutivesRec
 
 
     @Override
-    public void onItemClick(View view, int position, ExecutivesDetailsObj object) {
+    public void onItemClick(View view, int position, final ExecutivesDetailsObj object) {
 
-        showShortToast(object.getFullName());
+        switch (view.getId()) {
+
+            case R.id.ib_delete_executive:
+                AppAlertDialog.showAlertDialog(ExecutiveListActivity.this, "Alert", "Do you really want to delete Executive  " + object.getFullName(),
+                        true, "Yes", "No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                callCreateExecutivesAPI(object);
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                break;
+        }
     }
 }

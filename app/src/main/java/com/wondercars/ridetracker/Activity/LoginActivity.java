@@ -28,6 +28,7 @@ import static com.wondercars.ridetracker.Utils.AppConstants.LOGIN_SUCCESSFULLY;
 import static com.wondercars.ridetracker.Utils.AppConstants.PLEASE_ENTER_PASSWORD;
 import static com.wondercars.ridetracker.Utils.AppConstants.PLEASE_ENTER_USERNAME;
 import static com.wondercars.ridetracker.manager.PreferenceManager.PREF_ADMIN_UID;
+import static com.wondercars.ridetracker.manager.PreferenceManager.PREF_ADMIN_USER_NAME;
 import static com.wondercars.ridetracker.manager.PreferenceManager.PREF_LOGIN_CURRENT_TAG;
 
 public class LoginActivity extends BaseActivity {
@@ -78,6 +79,7 @@ public class LoginActivity extends BaseActivity {
                     if (loginResponseObj != null && loginResponseObj.getStatus() != null) {
                         if (loginResponseObj.getStatus().getStatusCode() == SUCCESS) {
                             showLongToast(LOGIN_SUCCESSFULLY);
+                            PreferenceManager.writeString(PREF_ADMIN_USER_NAME,edtEnterUsername.getText().toString());
                             PreferenceManager.writeBoolean(PREF_LOGIN_CURRENT_TAG, true);
                             PreferenceManager.writeString(PREF_ADMIN_UID, loginResponseObj.getAdmin_uid());
                             callActivity(NavigationActivity.class);

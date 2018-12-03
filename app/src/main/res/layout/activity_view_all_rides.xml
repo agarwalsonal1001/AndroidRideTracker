@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar_layout"></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_margin_10dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+
+        <TextView
+            style="@style/text_style_primaryColor_normal_20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin_10dp"
+            android:layout_marginTop="@dimen/activity_margin_10dp"
+            android:gravity="center_vertical"
+            android:text="Select Type of Ride" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_border_rectangle_with_smallcurve_corners"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_select_ride_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Spinner>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pick_from_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin_10dp"
+            android:layout_marginTop="@dimen/activity_margin_20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@android:drawable/ic_menu_my_calendar" />
+
+            <TextView
+                android:id="@+id/tv_select_from_date"
+                style="@style/text_style_primaryColor_normal_20dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="center_vertical"
+                android:text="Pick From Date" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_pick_To_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin_10dp"
+            android:layout_marginTop="@dimen/activity_margin_20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@android:drawable/ic_menu_my_calendar" />
+
+            <TextView
+                android:id="@+id/tv_select_To_date"
+                style="@style/text_style_primaryColor_normal_20dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="center_vertical"
+                android:text="Pick To Date" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_next"
+            style="@style/text_style_white_normal_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="@dimen/activity_margin_10dp"
+            android:layout_marginTop="@dimen/activity_margin_20dp"
+            android:background="@drawable/blue_rectangle_with_circular_corners"
+            android:gravity="center"
+            android:paddingLeft="@dimen/size_50dp"
+            android:paddingRight="@dimen/size_50dp"
+            android:text="Generate"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

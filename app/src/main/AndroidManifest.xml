@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".Application.RideTrackerApplicationClass"
@@ -26,12 +28,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.MapsActivity"></activity>
+        <activity android:name=".BaseClasses.BaseActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.NavigationActivity" />
         <activity android:name=".Activity.ExecutiveListActivity" />
         <activity android:name=".Activity.CreateExecutivesActivity" />
         <activity android:name=".Activity.CarListActivity" />
-        <activity android:name=".Activity.CreateCarActivity"></activity>
+        <activity android:name=".Activity.CreateCarActivity" />
+        <activity android:name=".Activity.GetCarModelsActivity" />
+        <activity android:name=".Activity.ViewAllRidesActivity" />
+        <activity android:name=".Activity.SelectExecutiveActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
+        <!-- AIzaSyDqlbeEQpAUO8WMdngUJ6vtDZAQQhDJ25Y -->
+        <activity android:name=".Activity.TrackTestDriveActivity"></activity>
     </application>
 
 </manifest>

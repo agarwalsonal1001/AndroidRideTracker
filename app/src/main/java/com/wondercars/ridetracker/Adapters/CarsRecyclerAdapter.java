@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wondercars.ridetracker.R;
@@ -29,7 +30,7 @@ public class CarsRecyclerAdapter extends RecyclerView.Adapter<CarsRecyclerAdapte
     OnItemClickListener onItemClickListener;
 
 
-    public CarsRecyclerAdapter( Activity activity,ArrayList<CarDetailObj> carDetailObjArrayList, OnItemClickListener onItemClickListener) {
+    public CarsRecyclerAdapter(Activity activity, ArrayList<CarDetailObj> carDetailObjArrayList, OnItemClickListener onItemClickListener) {
         this.carDetailObjArrayList = carDetailObjArrayList;
         this.activity = activity;
         this.onItemClickListener = onItemClickListener;
@@ -49,17 +50,32 @@ public class CarsRecyclerAdapter extends RecyclerView.Adapter<CarsRecyclerAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvCarNumber.setText(carDetailObjArrayList.get(position).getRegistrationNumber());
-        holder.tvCarVariant.setText(carDetailObjArrayList.get(position).getVariantName());
-        holder.tvCarFuelType.setText(carDetailObjArrayList.get(position).getFuelType());
-        holder.tvCarMode.setText(carDetailObjArrayList.get(position).getMode());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+
+        try {
+            final CarDetailObj carDetailObj = carDetailObjArrayList.get(position);
+            if (carDetailObj != null) {
+                holder.tvCarNumber.setText(carDetailObj.getRegistrationNumber());
+                holder.tvCarVariant.setText(carDetailObj.getVariantName());
+                holder.tvCarFuelType.setText(carDetailObj.getFuelType());
+                holder.tvCarMode.setText(carDetailObj.getMode());
+       /* holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                onItemClickListener.onItemClick(v, position, carDetailObjArrayList.get(position));
+                onItemClickListener.onItemClick(v, position, carDetailObj);
             }
-        });
+        });*/
+                holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        onItemClickListener.onItemClick(v, position, carDetailObj);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -79,6 +95,8 @@ public class CarsRecyclerAdapter extends RecyclerView.Adapter<CarsRecyclerAdapte
         TextView tvCarMode;
         @BindView(R.id.card_view)
         CardView cardView;
+        @BindView(R.id.iv_delete)
+        ImageView ivDelete;
 
         public MyViewHolder(View view) {
             super(view);

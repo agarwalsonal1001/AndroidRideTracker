@@ -6,19 +6,19 @@ package com.wondercars.ridetracker.Retrofit.DTOs.CreateCarDTOs;
 
 public class CreateCarRequestObj {
 
-    String carName;
+    String carModelId;
     String registrationNumber;
     String variantId;
     String mode;
     String fuelType;
     String admin_uid;
 
-    public String getCarName() {
-        return carName;
+    public String getcarModelId() {
+        return carModelId;
     }
 
-    public void setCarName(String carName) {
-        this.carName = carName;
+    public void setcarModelId(String carModelId) {
+        this.carModelId = carModelId;
     }
 
     public String getRegistrationNumber() {

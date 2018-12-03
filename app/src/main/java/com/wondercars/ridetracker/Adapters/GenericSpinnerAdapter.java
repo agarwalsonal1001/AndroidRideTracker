@@ -8,11 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.wondercars.ridetracker.Retrofit.DTOs.GetAllSRMDTOs.RideTrackerUser;
+import com.wondercars.ridetracker.Retrofit.DTOs.GetCarModelsDTOs.CarModels;
 import com.wondercars.ridetracker.Retrofit.DTOs.GetVeriantsDTOs.VeriantsDetails;
 import com.wondercars.ridetracker.Utils.AppConstants;
 
 import java.util.List;
 
+import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.CAR_MODELS;
+import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.GENERATE_REPORTS;
+import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.GET_ALL_SRM;
+import static com.wondercars.ridetracker.Utils.AppConstants.ResponseObjectType.GET_DESIGNATION_LIST;
 
 
 /**
@@ -84,12 +90,30 @@ public class GenericSpinnerAdapter<T> extends ArrayAdapter<T> {
 
         TextView label = (TextView) row.findViewById(android.R.id.text1);
         label.setText("");
+        try {
+            switch (responseObjectType) {
+                case AppConstants.ResponseObjectType.VERIANT_DETAILS:
+                    label.setText(((VeriantsDetails) itemList.get(position)).getVariantName());
+                    break;
 
-        switch (responseObjectType){
+                case CAR_MODELS:
+                    label.setText(((CarModels) itemList.get(position)).getCarModelName());
+                    break;
 
-            case AppConstants.ResponseObjectType.VERIANT_DETAILS:
-                label.setText(((VeriantsDetails)itemList.get(position)).getVariantName());
-                break;
+                case GET_ALL_SRM:
+                    label.setText(((RideTrackerUser) itemList.get(position)).getFullName());
+                    break;
+                case GET_DESIGNATION_LIST:
+                    label.setText(itemList.get(position).toString());
+                    break;
+
+                case GENERATE_REPORTS:
+                    label.setText(itemList.get(position).toString());
+                    break;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return row;

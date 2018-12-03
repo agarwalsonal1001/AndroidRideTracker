@@ -1,18 +1,24 @@
 package com.wondercars.ridetracker.Retrofit.DTOs.GetExecutivesDTOs;
 
+import java.io.Serializable;
+
 /**
  * Created by acer on 18/11/17.
  */
 
-public class ExecutivesDetailsObj {
+public class ExecutivesDetailsObj implements Serializable {
 
-    String uid;
-    String username;
-    String email;
-    String fullName;
-    String phoneNumber;
-    String activeFlg;
-    String createDate;
+    private String uid;
+    private String title;
+    private String designation;
+    private String email;
+    private String password;
+    private String fullName;
+    private String phoneNumber;
+    private String createDate;
+    private String lastUpdateDate;
+    private String activeFlg;
+    private String admin_uid;
 
     public String getUid() {
         return uid;
@@ -22,12 +28,20 @@ public class ExecutivesDetailsObj {
         this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getEmail() {
@@ -36,6 +50,14 @@ public class ExecutivesDetailsObj {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {
@@ -54,6 +76,22 @@ public class ExecutivesDetailsObj {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(String lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
     public String getActiveFlg() {
         return activeFlg;
     }
@@ -62,11 +100,12 @@ public class ExecutivesDetailsObj {
         this.activeFlg = activeFlg;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public String getAdminUid() {
+        return admin_uid;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setAdminUid(String adminUid) {
+        this.admin_uid = adminUid;
     }
+
 }

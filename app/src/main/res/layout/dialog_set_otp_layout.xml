@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin_10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_old_otp"
+        style="@style/text_style_black_normal_18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_margin_10dp"
+        android:layout_marginLeft="@dimen/activity_margin_10dp"
+        android:layout_marginTop="@dimen/activity_margin_10dp"
+        android:text="Current OTP : " />
+
+
+    <TextView
+        style="@style/text_style_black_normal_18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_margin_10dp"
+        android:layout_marginTop="@dimen/activity_margin_10dp"
+        android:text="Please Set New OTP" />
+
+    <EditText
+        android:id="@+id/et_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin_10dp"
+        android:background="@drawable/gray_border_rectangle_with_circular_corners"
+        android:inputType="number"
+        android:maxLength="4" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_margin_10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+
+        <Button
+            android:id="@+id/button_set"
+            style="@style/text_style_white_normal_20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginLeft="@dimen/activity_margin_10dp"
+            android:layout_marginRight="@dimen/activity_margin_10dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/blue_rectangle_with_circular_corners"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button_cancel"
+            style="@style/text_style_white_normal_20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginLeft="@dimen/activity_margin_10dp"
+            android:layout_marginRight="@dimen/activity_margin_10dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/blue_rectangle_with_circular_corners"
+            android:gravity="center"
+            android:text="Set"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

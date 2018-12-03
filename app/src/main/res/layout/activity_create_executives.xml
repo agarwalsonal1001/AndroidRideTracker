@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#80dedede"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#80dedede"
     android:orientation="vertical"
     tools:context="com.wondercars.ridetracker.Activity.CreateExecutivesActivity">
 
@@ -13,120 +13,201 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_margin_10dp"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_marginLeft="@dimen/activity_margin_10dp"
+        android:layout_marginRight="@dimen/activity_margin_10dp"
+        android:layout_marginTop="@dimen/activity_margin_10dp"
+        android:fillViewport="true">
 
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.15"
-            app:hintTextAppearance="@style/text_input_layout">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <EditText
-                android:id="@+id/et_name"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                android:inputType="text"/>
+                android:layout_marginTop="4dp"
+                app:hintTextAppearance="@style/text_input_layout">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_employee_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Employee Number"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.15"
-            app:hintTextAppearance="@style/text_input_layout">
-
-            <EditText
-                android:id="@+id/et_mobilenumber"
+            <TextView
+                style="@style/text_style_primaryColor_normal_20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mobile Number"
-                android:inputType="number"
-                android:textColorHint="@color/blackColor" />
+                android:layout_marginTop="@dimen/activity_margin_10dp"
+                android:gravity="center_vertical"
+                android:text="Title" />
 
-        </android.support.design.widget.TextInputLayout>
+            <RadioGroup
+                android:id="@+id/rg_selet_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_margin_5dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_mr"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="Mr." />
+
+                <RadioButton
+                    android:id="@+id/rb_mrs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Mrs." />
+            </RadioGroup>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.15"
-            app:hintTextAppearance="@style/text_input_layout">
-
-            <EditText
-                android:id="@+id/et_email"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textColorHint="@color/blackColor" />
+                android:layout_marginTop="4dp"
+                app:hintTextAppearance="@style/text_input_layout">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.15"
-            app:hintTextAppearance="@style/text_input_layout">
-
-            <EditText
-                android:id="@+id/et_username"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User Name"
-                android:inputType="text"
-                android:textColorHint="@color/blackColor" />
+                android:layout_marginTop="4dp"
+                app:hintTextAppearance="@style/text_input_layout">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_mobilenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:inputType="number"
+                    android:textColorHint="@color/blackColor" />
+
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="0.155"
-            app:hintTextAppearance="@style/text_input_layout">
-
-            <EditText
-                android:id="@+id/et_password"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColorHint="@color/blackColor" />
+                android:layout_marginTop="4dp"
+                app:hintTextAppearance="@style/text_input_layout">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Id"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/blackColor" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.05"></View>
+            </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/button_create"
-            android:background="@drawable/blue_rectangle_with_circular_corners"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:textAllCaps="false"
-            android:layout_gravity="center"
-            android:gravity="center"
-            style="@style/text_style_white_normal_20dp"
-            android:text="Add"
-            android:layout_weight="0.12"/>
 
-    </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:hintTextAppearance="@style/text_input_layout">
 
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/blackColor" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                style="@style/text_style_primaryColor_normal_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Designation" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin_10dp"
+                android:background="@drawable/gray_border_rectangle_with_smallcurve_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner_select_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </Spinner>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/text_style_primaryColor_normal_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin_10dp"
+                android:gravity="center_vertical"
+                android:text="Reporting Manager" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin_10dp"
+                android:background="@drawable/gray_border_rectangle_with_smallcurve_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner_select_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </Spinner>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></View>
+
+            <Button
+                android:id="@+id/button_create"
+                style="@style/text_style_white_normal_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/activity_margin_10dp"
+                android:background="@drawable/blue_rectangle_with_circular_corners"
+                android:gravity="center"
+                android:text="Add"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
